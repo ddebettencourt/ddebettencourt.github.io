@@ -20,8 +20,8 @@
 
 title: "Dominic de Bettencourt"
 email: "dominicd@berkeley.edu"
-description: >- # this means to ignore newlines until "baseurl:"
-  My personal website.
+#description: >- # this means to ignore newlines until "baseurl:"
+ # My personal website.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "dominicd.me" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
