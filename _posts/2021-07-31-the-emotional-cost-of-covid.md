@@ -1,9 +1,7 @@
 ---
-title: Welcome
-tags: World Issues
+title: The Emotional Cost of COVID-19
+tags: "World Issues"
 ---
-
-<h1>The Emotional Cost of COVID</h1>
 
 The COVID-19 pandemic has mostly ended in the US (potential vaccine-evading variant aside), which means it's a good time to look back at how it went. Clearly, our response left things to be desired, and there are many things we could have done better, but when we look at how we did, it's often looked at through one of two lenses: either how many deaths we could have prevented, or how much economic loss we could have prevented. While these are valid and important ways to look at the situation, I want to look at it from a different perspective - from the perspective of the millions of people that reduced their social interactions, avoided large gatherings, and hurt their mental health over the past 16 months. What exactly have we lost from these emotional costs? How many lives need to be saved before these emotional costs are worth paying?
 
