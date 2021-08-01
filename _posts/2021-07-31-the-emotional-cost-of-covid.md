@@ -1,6 +1,6 @@
 ---
 title: The Emotional Cost of COVID-19
-tags: "World Issues"
+tags: "World"
 ---
 
 The COVID-19 pandemic has mostly ended in the US (potential vaccine-evading variant aside), which means it's a good time to look back at how it went. Clearly, our response left things to be desired, and there are many things we could have done better, but when we look at how we did, it's often looked at through one of two lenses: either how many deaths we could have prevented, or how much economic loss we could have prevented. While these are valid and important ways to look at the situation, I want to look at it from a different perspective - from the perspective of the millions of people that reduced their social interactions, avoided large gatherings, and hurt their mental health over the past 16 months. What exactly have we lost from these emotional costs? How many lives need to be saved before these emotional costs are worth paying?
@@ -17,29 +17,19 @@ Instead of using a life as the base unit, I will use a year of life as the base 
 
 Here is a shortened version of the table of people at various ages, and their years remaining, which I will use as general measures for the rest of this article.
 
+| Age      | Years Remaining |
+| ----------- | ----------- |
+| 10      | 69.0       |
+| 20   | 59.2        |
+| 30   | 49.8 |
+| 40  | 40.5 |
+| 50 | 31.5 |
+| 60 | 23.1 |
+| 70 | 15.5 |
+| 80 | 9.0 |
+| 90 | 4.4 |
+| 100 | 2.3 |
 
-Age
-Years Remaining
-10
-69.0
-20
-59.2
-30
-49.8
-40
-40.5
-50
-31.5
-60
-23.1
-70
-15.5
-80
-9.0
-90
-4.4
-100
-2.3
 
 
 
