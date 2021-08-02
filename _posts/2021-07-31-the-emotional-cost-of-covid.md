@@ -5,7 +5,7 @@ tags: "World"
 
 For vaccinated people, the COVID-19 pandemic has mostly ended in the US (concerns about the Delta variant, etc. aside), which means it's a good time to look back at how it's gone. Clearly, our response left things to be desired, and there are many things we could have done better, but when we look at how we did, it's often looked at through one of two lenses: either how many deaths we could have prevented, or how much economic loss we could have prevented. While these are valid and important ways to look at the situation, I want to look at it from a different perspective - from the perspective of the millions of people that reduced their social interactions, avoided large gatherings, and hurt their mental health over the past 16 months. What exactly have we lost from these emotional costs? How many lives need to be saved to make these emotional costs worth paying?
 
-<h3>The Value of a Life</h3>
+### The Value of a Life
 
 In order to properly make this comparison, we're going to need to have some idea of the value of a human life. Not the economic value, but a different sort of value - something that we can compare an emotional cost to. 
 
@@ -33,7 +33,7 @@ Here is a shortened version of the table of people at various ages, and the numb
 
 
 
-<h3>Establishing Bounds</h3>
+### Establishing Bounds
 
 The first thing that I think is important to do, before getting into the calculations, is to establish both that emotional cost is a real cost, and that sometimes that cost is worth it. I'll take two extreme scenarios in order to demonstrate these.
 
@@ -43,7 +43,7 @@ Secondly, imagine a new virus which kills 10% of everyone that it infects, or 1 
 
 So clearly, the number of people that you need to save for the emotional cost to be worth it is somewhere between 3,300 and 33 million. Using our years lost metric, we find our bounds are between 140,000 and 1.4 billion. It's a pretty wide range, but this eliminates two arguments: the "avoid all risk at all costs" argument, and the "open everything at all costs" argument. Next, what we need to do is quantify how much was saved from COVID, and how much was lost.
 
-<h3>Do Lives Have Extra Worth?</h3>
+### Do Lives Have Extra Worth?
 
 The concept of this article is based on the idea that one person losing their life is roughly equivalent to many people having significant inconveniences in their life for some period of time. For example, if you have a choice between letting one person die and letting 100 people become paralyzed, the first choice seems preferable to me. But there is an argument that you should look from the perspective of saving as many lives as possible, regardless of how this impacts others' quality of life. If you view "being alive" as having infinite value, then it doesn't matter how bad your life gets, you aren't truly losing anything as long as your life isn't actually shortened.
 
@@ -51,7 +51,7 @@ However, societally, we make these tradeoffs all the time. Car crashes kill roug
 
 If our society reoriented itself around saving the most number of lives possible, valuing a life, or extra year of life, infinitely, it would look very different than it does today. We would put more money into improving health, cars would probably be banned, as well as alcohol and extreme sports. (Even some regular sports, like football). People would live fairly boring lives, staying home most of the time, and avoiding anything that might possibly lower their chance of survival. If this sounds kind of like what the beginning of the pandemic was like, that's the point I'm trying to make. We can't give a life infinite value and ignore what makes life worth living. 
 
-<h3>The COVID Worst-Case Scenario</h3>
+### The COVID Worst-Case Scenario
 
 In this scenario, I will look at how many years could be lost in the absolute worst-case scenario for COVID, where everyone in the US gets infected. This represents the maximum possible number of years that we could save by instituting lockdowns, if every single death was prevented.
 
@@ -63,7 +63,7 @@ With 330 million people in the US, this means that everyone should expect to sac
 
 (I didn't include effects of Long COVID or hospitalization because they don't add up to very much compared to 50 days of life lost per person, and are hard to get good numbers on.)
 
-<h3>Quantifying Emotional Cost</h3>
+### Quantifying Emotional Cost
 
 Of course, this question is more difficult than saying that everyone should shorten their lives by 50 days in order to prevent COVID, as that would be impossible. Instead, we have to come up with some form of measurement of how much is lost per day in lockdown. I'd rather be in lockdown for a day than have my life shortened by a day, so a day in lockdown is not exactly one lost day. I can still accomplish things, and have enjoyable moments while following strict COVID guidelines. Also, some guidelines are stricter than others, and have different impacts on the value of a day. For example, being required to wear a mask in the grocery store has a low impact on how valuable a day is, but being quarantined inside your home has a significant impact.
 
@@ -87,7 +87,7 @@ Once we start looking at policies that are not as restrictive as a stay-at-home 
 
 However, this math is predicated on the idea that a lockdown could save 44.8 million years of life, which is likely an overestimate. In order to truly prevent nearly all of these years of life from being lost, a very strict lockdown would be needed for a very long time. Additionally, the marginal extra benefit to of having a stay-at-home order (0.33 days lost per day) vs. having a policy that (for example) bans large events, half of vacations, and requires masks indoors (0.05 + 0.025 + 0.015 = 0.09 days lost per day) is probably not enough to counteract the extra 0.24 days lost per day. Measures that have a low impact on social cost, but a high impact on preventing COVID spread, should be prioritized, like requiring masks. Overall, there are certainly restrictions that save more years of life than they take away. But not all restrictions fall under this category, and especially not the harshest ones like [banning outdoor exercise](https://apnews.com/article/california-coronavirus-pandemic-917ba20d0a2f81e1f33de373dc1bd85f). When considering whether to implement a restriction, it should be looked at in terms of not only how it might prevent COVID, but also how it will still allow for people to live meaningful, value-filled lives. 
 
-<h3>What Should We Have Done?</h3>
+### What Should We Have Done?
 
 I can't expect that the US government, or any state government, would independently come to the same conclusions that I've come to here, as much of the numbers I've arrived at are fairly malleable. However, I do think that it's worthwhile to look at what we should have done, if we were to look at it from this perspective.
 
@@ -103,7 +103,7 @@ Then, at a certain point when the vaccine had been offered to everyone over 65, 
 
 Of course, during all of this time, other factors must also be considered, such as the prevalence of COVID in an area at a certain time. It makes sense to tighten restrictions when there are more cases, perhaps lower the capacity of indoor dining, encourage outdoor socialization, or attempt to reduce travel for holidays. But it doesn't make sense to immediately go to the step of trying to eliminate most socialization (via closing all indoor dining, banning socialization between more than two households, etc.), as that has a high cost that isn't necessarily paid off by the benefits. 
 
-<h3>Going Forward</h3>
+### Going Forward
 
 I believe that in the US, nearly every pandemic-related restriction should be dropped, aside from requiring masks on airplanes, in hospitals, and some other indoor public places. At this point, everyone who wants a vaccine has gotten one (aside from young children, who are not particularly impacted by the virus). So, the potential to save years of life is limited to the 2% (probably an overestimate) of people who can't get vaccinated at all, and the roughly 10% (accounting for the Delta variant) of the population who are vaccinated, but will have a breakthrough case if they are exposed to the virus. In total, that's 12% of people at maximum.
 
