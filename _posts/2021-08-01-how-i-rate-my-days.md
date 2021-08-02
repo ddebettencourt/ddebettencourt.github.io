@@ -1,4 +1,7 @@
-
+---
+title: How I Rate My Days
+tags: "Personal-Growth"
+---
 
 For around the last 14 months, I've been keeping a mostly daily journal, where I (among other things) rate how good my day was that day. I do this on a 1-10 scale, where 1 is the worst and 10 is the best. I don't think I'm the only person to come up with this - I'm sure that lots of people have thought of this before, and maybe even some of you do it. I like it, because it allows me to track how my happiness has changed over time. Of course, it's all fairly relative, and over long periods of time, my standards will probably shift. It's not intended to be an exact measure, but it provides a useful overview of my general well-being.
 
