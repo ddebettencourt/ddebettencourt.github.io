@@ -9,6 +9,6 @@ title: Hi! I'm Dominic.
 This is my personal website. I pay $1.58 a month to keep this domain name, so I'm definitely going to get the most out of it. Well, eventually, anyways. 
 
 
-I'll probably add some more stuff to this soon. I've written a couple of blog posts, and this seems like a solid place to put them. Come back in a couple weeks or so.
+Check out the "Archive" tab if you want to see a few things I've written recently.
 
 
