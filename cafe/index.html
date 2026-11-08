@@ -712,13 +712,13 @@
     // the glass itself: solid wall with a thick base
     food(g, lathe([[0, 0.05], [0.4, 0.05], [0.41, 0.07], [0.5, 1.66], [0.485, 1.67], [0.385, 0.16], [0, 0.16]], 48), 'glass');
 
-    var ice = new THREE.Group(); g.add(ice);
+    var ice = new THREE.Group(); g.add(ice); ice.userData.dyn = true;
     [[-0.12, 1.22, 0.06, 0.3, 0.5, 0.2], [0.15, 1.2, -0.1, -0.2, 1.1, 0.3], [0.05, 1.18, 0.18, 0.5, 0.2, -0.3]].forEach(function (c) {
       var m = food(ice, rbox(0.24, 0.22, 0.24, 0.05), '#EAF3F1', [c[0], c[1], c[2]], { gloss: 1, hull: 0.012 });
       m.rotation.set(c[3], c[4], c[5]);
     });
 
-    var cream = new THREE.Group(); g.add(cream);
+    var cream = new THREE.Group(); g.add(cream); cream.userData.dyn = true;
     food(cream, new THREE.CylinderGeometry(r(1.42), r(1.22), 0.2, 44), '#FFFCF4', [0, 1.32, 0], { hull: false });
     var sw = food(cream, swirlGeo(r(1.42) * 0.82, 0.38, 7), '#FFFCF4', [0, 1.41, 0], { gloss: 0.5 });
     sw.rotation.y = 0.4;
@@ -728,7 +728,7 @@
       food(cream, new THREE.BoxGeometry(0.035, 0.012, 0.035), teaHex, [Math.cos(a) * rr, hh, Math.sin(a) * rr], { hull: false });
     }
 
-    var foam = new THREE.Group(); g.add(foam);
+    var foam = new THREE.Group(); g.add(foam); foam.userData.dyn = true;
     var fr = r(1.4);
     food(foam, new THREE.CylinderGeometry(fr, r(1.22), 0.18, 44), '#D7DEAA', [0, 1.31, 0], { hull: false });
     food(foam, lathe([[0, 0], [fr, 0], [fr * 0.97, 0.05], [fr * 0.8, 0.12], [fr * 0.45, 0.17], [0, 0.185]]), '#D7DEAA', [0, 1.4, 0], { hull: 0.012 });
@@ -740,14 +740,14 @@
     }
 
     // strawberry purée pooled under the milk, with seeds
-    var berry = new THREE.Group(); g.add(berry);
+    var berry = new THREE.Group(); g.add(berry); berry.userData.dyn = true;
     food(berry, new THREE.CylinderGeometry(r(0.44) + 0.004, r(0.16) + 0.004, 0.28, 44), '#D8475E', [0, 0.30, 0], { hull: false });
     for (var q = 0; q < 26; q++) {
       var qa = q * 2.39996, qy = 0.19 + rnd2(q + 50) * 0.22;
       food(berry, new THREE.BoxGeometry(0.018, 0.026, 0.01), '#F3D36B', [Math.cos(qa) * (r(qy) + 0.006), qy, Math.sin(qa) * (r(qy) + 0.006)], { hull: false }).rotation.y = -qa;
     }
     var straw = food(g, new THREE.CylinderGeometry(0.035, 0.035, 1.95, 16), '#3F6B45', [0.17, 1.35, 0.05], { hull: 0.01 });
-    straw.rotation.set(0.05, 0, -0.17);
+    straw.rotation.set(0.05, 0, -0.17); straw.userData.dyn = true;
 
     var dropAt = -1e4;
     function set(t, animate) {
@@ -968,7 +968,7 @@
       landing(f, true);
       var turn = new THREE.Group(); f.add(turn);
       s.make(turn);
-      spinners.push(turn);
+      spinners.push(turn); turn.userData.dyn = true;
       var u = new V().fromArray(s.U), d = new V().fromArray(s.D), p = new V().fromArray(s.P);
       s.lookAt = p.clone().addScaledVector(u, 0.75);
       s.upV = u;
@@ -1422,7 +1422,7 @@
     var t = i / 120, a = t * Math.PI * 5;
     pts.push(axis.clone().multiplyScalar((t - 0.5) * 7).addScaledVector(e1, Math.cos(a) * 1.6).addScaledVector(e2, Math.sin(a) * 1.6));
   }
-  var ribbon = new THREE.Group(); scene.add(ribbon);
+  var ribbon = new THREE.Group(); scene.add(ribbon); ribbon.userData.dyn = true;
   var curve = new THREE.CatmullRomCurve3(pts);
   mesh(ribbon, new THREE.TubeGeometry(curve, 240, 0.07, 8, false), '#F7F7F2', null, { hull: 0.02 });
   var bowlPts = [new THREE.Vector2(0.0, 0), new THREE.Vector2(0.18, 0.0), new THREE.Vector2(0.28, 0.12), new THREE.Vector2(0.32, 0.28), new THREE.Vector2(0.3, 0.28), new THREE.Vector2(0.26, 0.14), new THREE.Vector2(0.0, 0.06)];
@@ -1471,6 +1471,61 @@
     }); });
   })();
 
+  /* ---------- Merge everything that doesn't move into a few big meshes (hundreds fewer draw calls) ---------- */
+  (function () {
+    scene.updateMatrixWorld(true);
+    var inv = new THREE.Matrix4(), rel = new THREE.Matrix4();
+    function mergeUnder(root) {
+      var buckets = new Map(), victims = [], kids = [];
+      inv.copy(root.matrixWorld).invert();
+      (function walk(node) {
+        node.children.forEach(function (c) {
+          if (c.userData.dyn) { kids.push(c); return; }
+          if ((c.isMesh || c.isLineSegments) && !Array.isArray(c.material) && !c.material.map && !c.material.vertexColors && !c.geometry.attributes.shade) {
+            victims.push(c);
+            if (c.visible && isShown(c, root)) {
+              var key = c.material.uuid + (c.isLineSegments ? 'L' : 'M');
+              if (!buckets.has(key)) buckets.set(key, { mat: c.material, line: c.isLineSegments, list: [] });
+              rel.multiplyMatrices(inv, c.matrixWorld);
+              var g = (c.geometry.index ? c.geometry.toNonIndexed() : c.geometry.clone());
+              g.applyMatrix4(rel);
+              buckets.get(key).list.push(g);
+            }
+          }
+          walk(c);
+        });
+      })(root);
+      if (victims.length < 2) { kids.forEach(mergeUnder); return; }
+      victims.forEach(function (v) {
+        v.children.slice().forEach(function (c) { if (c.userData.dyn) v.parent.add(c); });
+        if (v.parent) v.parent.remove(v);
+      });
+      buckets.forEach(function (b) {
+        var total = 0;
+        b.list.forEach(function (g) { total += g.attributes.position.count; });
+        var pos = new Float32Array(total * 3), nor = b.line ? null : new Float32Array(total * 3), o = 0;
+        b.list.forEach(function (g) {
+          pos.set(g.attributes.position.array, o * 3);
+          if (nor && g.attributes.normal) nor.set(g.attributes.normal.array, o * 3);
+          o += g.attributes.position.count;
+          g.dispose();
+        });
+        var geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        if (nor) geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+        var m = b.line ? new THREE.LineSegments(geo, b.mat) : new THREE.Mesh(geo, b.mat);
+        if (b.mat === glassMat) m.renderOrder = 1;
+        root.add(m);
+      });
+      kids.forEach(mergeUnder);
+    }
+    function isShown(o, root) {
+      for (var n = o; n && n !== root; n = n.parent) if (!n.visible) return false;
+      return true;
+    }
+    mergeUnder(scene);
+  })();
+
   /* ---------- Sizing ---------- */
   function size() {
     var w = window.innerWidth, h = window.innerHeight;
@@ -1507,6 +1562,7 @@
   // Each move is a timed flight: pull back from the dish, swoop through the room on a curve,
   // roll as "down" changes from one surface to another, then glide in to the next dish.
   var DUR = reduce ? 1 : 2600, flightFov = 0;
+  var smoothPos = new V(), smoothQ = new THREE.Quaternion(), lastUp = new V(0, 1, 0), lastNow = 0, firstFrame = true;
   var tw = null;
   var curPos = STATIONS[0].camPos.clone(), curLook = STATIONS[0].lookAt.clone(), curUp = STATIONS[0].upV.clone(), curLift = 0;
   var lookV = new V(), upV2 = new V(), side = new V(), P1 = new V(), P2 = new V(), b0 = new V(), b1 = new V(), mid = new V();
@@ -1565,9 +1621,17 @@
       pos.x += Math.sin(t * 0.5) * 0.06;
       pos.y += Math.cos(t * 0.4) * 0.05;
     }
-    camera.position.copy(pos);
-    camera.up.copy(upV2);
-    camera.lookAt(lookV);
+    // Never let "up" line up with the view direction (that makes lookAt flip).
+    var vdir = lookV.clone().sub(pos).normalize();
+    if (Math.abs(vdir.dot(upV2)) > 0.97) upV2.copy(lastUp); else lastUp.copy(upV2);
+    tmpCam.position.copy(pos); tmpCam.up.copy(upV2); tmpCam.lookAt(lookV);
+    // Ease the real camera toward that pose so corrections, retargets and dropped frames never show as jumps.
+    var dt = Math.min(0.1, Math.max(0, (now - lastNow) / 1000)); lastNow = now;
+    var ease_ = firstFrame || reduce ? 1 : 1 - Math.exp(-dt * 6.5);
+    firstFrame = false;
+    smoothPos.lerp(pos, ease_); smoothQ.slerp(tmpCam.quaternion, ease_);
+    camera.position.copy(smoothPos);
+    camera.quaternion.copy(smoothQ);
     camera.fov = baseFov + flightFov;
     if (tallView) {
       var lw = window.innerWidth, lh = window.innerHeight;
