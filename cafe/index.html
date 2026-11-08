@@ -9,21 +9,11 @@
 <meta property="og:description" content="Walk the stairs to see the menu.">
 <meta property="og:image" content="cover.jpg">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}
-  /* Title face: chunky 3D block letters */
-  .intro h1, .card h2, .sheet h2, .brand { font-family: var(--title); font-style: normal; font-weight: 400; letter-spacing: .01em; }
-  .intro h1 { font-size: clamp(30px, 8vw, 54px); line-height: 1.05; }
-  .intro h1 em { font-style: normal; padding-left: 0; }
-  .card h2 { font-size: 26px; line-height: 1.12; }
-  .brand { font-size: 17px; }
-  @media (max-width: 819px) {
-    .intro h1 { font-size: clamp(28px, 8.4vw, 40px); }
-    .card h2 { font-size: 22px; }
-  }
 </style>
 <title>Home Café Menu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Rampart+One&family=IM+Fell+English+SC&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Alegreya+Sans:wght@400;500;700&display=swap">
 <style>
   /* One deliberate look: ink on paper, like the lithograph on the cover. */
   :root {
@@ -35,7 +25,7 @@
     --matcha: #6E9440;
     --matcha-deep: #4E6E2A;
     --display: "IM Fell English", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-    --title: "Rampart One", "IM Fell English", Georgia, serif;
+    --title: "IM Fell English", Georgia, serif;
     --sc: "IM Fell English SC", "IM Fell English", Georgia, serif;
     --body: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
   }
@@ -1223,7 +1213,7 @@
     var faces = [
       { n: [1, 0, 0], draw: function (g, S) { bricks(g, S); windowAt(g, 150, 250, 260, 420); windowAt(g, 614, 250, 260, 420); } },
       { n: [-1, 0, 0], draw: function (g, S) { bricks(g, S); mirror(g, 300, 380, 110); door(g, 600, 470, 200, 420); } },
-      { n: [0, 0, 1], draw: function (g, S) { bricks(g, S); windowAt(g, 140, 260, 300, 440); shelves(g, 600, 300, 300, 560); } },
+      { n: [0, 0, 1], draw: function (g, S) { bricks(g, S); windowAt(g, 140, 260, 300, 440); g.fillStyle = '#C9C2B2'; g.fillRect(600, 300, 300, 560); hatchRect(g, 600, 300, 300, 560, 4, 0.3); } },
       { n: [0, 0, -1], draw: function (g, S) { bricks(g, S); windowAt(g, 120, 230, 240, 400); windowAt(g, 420, 230, 240, 400); mirror(g, 840, 420, 90); } },
       { n: [0, 1, 0], floor: true },
       { n: [0, -1, 0], floor: true }
@@ -1243,6 +1233,65 @@
       room.add(m);
     });
     room.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(ROOM * 2, ROOM * 2, ROOM * 2)), lineMat));
+  })();
+
+  /* ---------- A real shelf of tea jars on the brick wall (replaces the painted one) ---------- */
+  (function () {
+    // Texture pixel (in a 1024 canvas) to world, for the +z wall: x runs right-to-left seen from inside.
+    function wx(px) { return ROOM - 2 * ROOM * px / 1024; }
+    function wy(py) { return ROOM - 2 * ROOM * py / 1024; }
+    var x0 = wx(900), x1 = wx(600), yTop = wy(300), yBot = wy(860);
+    var W = x1 - x0, H = yTop - yBot, depth = 1.5, zWall = ROOM - 0.02, zc = zWall - depth / 2;
+    var WOOD = '#D9CDB4', WOOD_D = '#C4B597';
+    var unit = new THREE.Group(); scene.add(unit);
+    mesh(unit, new THREE.BoxGeometry(0.3, H, depth), WOOD_D, [x0 + 0.15, (yTop + yBot) / 2, zc], { edges: true, sp: 0.05 });
+    mesh(unit, new THREE.BoxGeometry(0.3, H, depth), WOOD_D, [x1 - 0.15, (yTop + yBot) / 2, zc], { edges: true, sp: 0.05 });
+    var levels = 5, gap = H / levels;
+    var kinds = [
+      { fill: '#8DB55A', lvl: 0.62 },             // matcha powder
+      { fill: '#8A5A3B', lvl: 0.7, leaf: true },  // hojicha leaves
+      { fill: '#F5F2E9', lvl: 0.55 },             // sugar
+      { fill: '#C9404F', lvl: 0.5, gloss: 0.8 },  // strawberry jam
+      { cookies: true },                          // cookies
+      { fill: '#D9A65B', lvl: 0.45, leaf: true }  // thai tea leaves
+    ];
+    var n = 0;
+    for (var l = 0; l <= levels; l++) {
+      var py = yBot + l * gap;
+      mesh(unit, new THREE.BoxGeometry(W, 0.22, depth), WOOD, [(x0 + x1) / 2, py, zc], { edges: true, sp: 0.05 });
+      if (l === levels) break;
+      var x = x0 + 0.75;
+      while (x < x1 - 0.9) {
+        n++;
+        var r = 0.42 + rnd2(n * 3.1) * 0.22, h = Math.min(gap - 0.9, 1.4 + rnd2(n * 7.7) * 1.3);
+        if (x + r > x1 - 0.5) break;
+        var k = kinds[(n * 5 + l) % kinds.length];
+        var jar = new THREE.Group(); jar.position.set(x + r, py + 0.11, zc + (rnd2(n) - 0.5) * 0.3); unit.add(jar);
+        food(jar, lathe([[0, 0], [r, 0], [r * 1.02, 0.06], [r, h * 0.84], [r * 0.82, h * 0.93], [r * 0.82, h]], 32), 'glass');
+        if (k.cookies) {
+          for (var c = 0; c < Math.floor(h / 0.2) - 1; c++) {
+            var ck = food(jar, new THREE.CylinderGeometry(r * 0.82, r * 0.82, 0.13, 22), c % 2 ? '#C99A5E' : '#D6AA6E', [0, 0.1 + c * 0.16, 0], { hull: 0.008 });
+            ck.rotation.set((rnd2(c + n) - 0.5) * 0.25, 0, (rnd2(c * 2 + n) - 0.5) * 0.25);
+          }
+        } else {
+          var fh = h * 0.84 * k.lvl;
+          food(jar, new THREE.CylinderGeometry(r - 0.04, r - 0.04, fh, 28), k.fill, [0, fh / 2 + 0.03, 0], { hull: false, gloss: k.gloss || 0 });
+          if (k.leaf) {
+            for (var q = 0; q < 10; q++) {
+              var qa = q * 2.4 + n, qr = rnd2(q + n * 4) * (r - 0.1);
+              food(jar, new THREE.BoxGeometry(0.1, 0.02, 0.05), k.fill, [Math.cos(qa) * qr, fh + 0.04, Math.sin(qa) * qr], { hull: false }).rotation.set(0.5, qa, 0.3);
+            }
+          }
+        }
+        var cork = (n % 3) !== 0;
+        food(jar, new THREE.CylinderGeometry(r * 0.86, r * 0.84, 0.24, 28), cork ? '#C8A675' : '#7B7F77', [0, h + 0.1, 0], { hull: 0.012, gloss: cork ? 0 : 0.9 });
+        if (!cork) food(jar, new THREE.SphereGeometry(0.07, 12, 8), '#5E625B', [0, h + 0.26, 0], { hull: false, gloss: 0.9 });
+        // paper label on the side facing the room
+        var lab = food(jar, new THREE.BoxGeometry(r * 1.0, h * 0.28, 0.02), '#F7F2E4', [0, h * 0.42, -(r + 0.012)], { hull: 0.006 });
+        food(jar, new THREE.BoxGeometry(r * 0.7, 0.025, 0.025), '#55594F', [0, h * 0.45, -(r + 0.03)], { hull: false });
+        x += 2 * r + 0.25 + rnd2(n * 1.3) * 0.3;
+      }
+    }
   })();
 
   /* ---------- The city outside: one merged mesh of blocks, water towers and fire escapes ---------- */
