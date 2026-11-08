@@ -1,5 +1,46 @@
----
-layout: home
-# articles:
-#   excerpt_type: html
----
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dominic de Bettencourt</title>
+<meta name="description" content="Dominic de Bettencourt's personal site, currently being rebuilt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Alegreya+Sans:wght@400;500&display=swap">
+<style>
+  :root { --paper: #E9E9E2; --ink: #1C1E1A; --graphite: #575B53; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Alegreya Sans", "Gill Sans", system-ui, sans-serif;
+    display: grid; place-items: center; padding: 24px 20px;
+  }
+  main { max-width: 440px; display: grid; gap: 18px; justify-items: start; }
+  svg { width: 120px; height: auto; }
+  h1 { font-family: "IM Fell English", Georgia, serif; font-weight: 400; font-size: clamp(36px, 9vw, 52px); line-height: 1; margin: 0; }
+  p { margin: 0; font-size: 18px; line-height: 1.45; color: var(--graphite); }
+  .sign { font-family: "IM Fell English", Georgia, serif; font-style: italic; font-size: 20px; color: var(--ink); }
+  @media (prefers-reduced-motion: no-preference) {
+    .tri { transform-origin: 60px 58px; animation: turn 24s linear infinite; }
+    @keyframes turn { to { transform: rotate(360deg); } }
+  }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 120 110" aria-hidden="true">
+    <g class="tri" fill="none" stroke="#1C1E1A" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M60 8 L112 98 L8 98 Z"/>
+      <path d="M60 30 L93 88 L27 88 Z"/>
+      <path d="M60 8 L44 36 M112 98 L80 98 M8 98 L24 70"/>
+      <path d="M44 36 L76 92 M80 98 L44 36 M24 70 L60 8" stroke-opacity=".35"/>
+    </g>
+  </svg>
+  <h1>Dominic de Bettencourt</h1>
+  <p class="sign">This site is under construction.</p>
+  <p>I’m rebuilding it from the ground up. Check back soon.</p>
+</main>
+</body>
+</html>
