@@ -18,24 +18,30 @@
     display: grid; place-items: center; padding: 24px 20px;
   }
   main { max-width: 440px; display: grid; gap: 18px; justify-items: start; }
-  svg { width: 120px; height: auto; }
+  svg { width: 132px; height: auto; overflow: visible; }
+  .tri polygon { stroke-width: .6; }
+  .tri .z { fill: url(#hz); stroke: #F4F4EF; }
+  .tri .x { fill: url(#hx); stroke: #B9BCB3; }
+  .tri .y { fill: url(#hy); stroke: #55594F; }
   h1 { font-family: "IM Fell English", Georgia, serif; font-weight: 400; font-size: clamp(36px, 9vw, 52px); line-height: 1; margin: 0; }
   p { margin: 0; font-size: 18px; line-height: 1.45; color: var(--graphite); }
   .sign { font-family: "IM Fell English", Georgia, serif; font-style: italic; font-size: 20px; color: var(--ink); }
   @media (prefers-reduced-motion: no-preference) {
-    .tri { transform-origin: 60px 58px; animation: turn 24s linear infinite; }
+    .tri { transform-box: fill-box; transform-origin: 50% 55%; animation: turn 40s linear infinite; }
     @keyframes turn { to { transform: rotate(360deg); } }
   }
 </style>
 </head>
 <body>
 <main>
-  <svg viewBox="0 0 120 110" aria-hidden="true">
-    <g class="tri" fill="none" stroke="#1C1E1A" stroke-width="1.6" stroke-linejoin="round">
-      <path d="M60 8 L112 98 L8 98 Z"/>
-      <path d="M60 30 L93 88 L27 88 Z"/>
-      <path d="M60 8 L44 36 M112 98 L80 98 M8 98 L24 70"/>
-      <path d="M44 36 L76 92 M80 98 L44 36 M24 70 L60 8" stroke-opacity=".35"/>
+  <svg viewBox="0 0 145.2 164.0" aria-hidden="true">
+    <defs>
+      <pattern id="hz" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="6" height="6" fill="#F4F4EF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#1C1E1A" stroke-width=".5" stroke-opacity=".35"/></pattern>
+      <pattern id="hx" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)"><rect width="4" height="4" fill="#B9BCB3"/><line x1="0" y1="0" x2="0" y2="4" stroke="#1C1E1A" stroke-width=".8" stroke-opacity=".55"/></pattern>
+      <pattern id="hy" width="3.2" height="3.2" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><rect width="3.2" height="3.2" fill="#55594F"/><line x1="0" y1="0" x2="0" y2="3.2" stroke="#1C1E1A" stroke-width="1.1" stroke-opacity=".7"/></pattern>
+    </defs>
+    <g class="tri" stroke-linejoin="round">
+      <polygon class="x" points="63.96,52.00 46.64,62.00 46.64,42.00 63.96,32.00"/><polygon class="y" points="29.32,52.00 46.64,62.00 46.64,42.00 29.32,32.00"/><polygon class="z" points="46.64,22.00 63.96,32.00 46.64,42.00 29.32,32.00"/><polygon class="x" points="81.28,62.00 63.96,72.00 63.96,52.00 81.28,42.00"/><polygon class="y" points="46.64,62.00 63.96,72.00 63.96,52.00 46.64,42.00"/><polygon class="z" points="63.96,32.00 81.28,42.00 63.96,52.00 46.64,42.00"/><polygon class="x" points="98.60,72.00 81.28,82.00 81.28,62.00 98.60,52.00"/><polygon class="y" points="63.96,72.00 81.28,82.00 81.28,62.00 63.96,52.00"/><polygon class="z" points="81.28,42.00 98.60,52.00 81.28,62.00 63.96,52.00"/><polygon class="x" points="115.92,82.00 98.60,92.00 98.60,72.00 115.92,62.00"/><polygon class="y" points="81.28,82.00 98.60,92.00 98.60,72.00 81.28,62.00"/><polygon class="z" points="98.60,52.00 115.92,62.00 98.60,72.00 81.28,62.00"/><polygon class="x" points="133.24,92.00 115.92,102.00 115.92,82.00 133.24,72.00"/><polygon class="y" points="98.60,92.00 115.92,102.00 115.92,82.00 98.60,72.00"/><polygon class="z" points="115.92,62.00 133.24,72.00 115.92,82.00 98.60,72.00"/><polygon class="x" points="115.92,102.00 98.60,112.00 98.60,92.00 115.92,82.00"/><polygon class="y" points="81.28,102.00 98.60,112.00 98.60,92.00 81.28,82.00"/><polygon class="z" points="98.60,72.00 115.92,82.00 98.60,92.00 81.28,82.00"/><polygon class="x" points="98.60,112.00 81.28,122.00 81.28,102.00 98.60,92.00"/><polygon class="y" points="63.96,112.00 81.28,122.00 81.28,102.00 63.96,92.00"/><polygon class="z" points="81.28,82.00 98.60,92.00 81.28,102.00 63.96,92.00"/><polygon class="x" points="81.28,122.00 63.96,132.00 63.96,112.00 81.28,102.00"/><polygon class="y" points="46.64,122.00 63.96,132.00 63.96,112.00 46.64,102.00"/><polygon class="z" points="63.96,92.00 81.28,102.00 63.96,112.00 46.64,102.00"/><polygon class="x" points="63.96,132.00 46.64,142.00 46.64,122.00 63.96,112.00"/><polygon class="y" points="29.32,132.00 46.64,142.00 46.64,122.00 29.32,112.00"/><polygon class="z" points="46.64,102.00 63.96,112.00 46.64,122.00 29.32,112.00"/><polygon class="x" points="46.64,142.00 29.32,152.00 29.32,132.00 46.64,122.00"/><polygon class="y" points="12.00,142.00 29.32,152.00 29.32,132.00 12.00,122.00"/><polygon class="z" points="29.32,112.00 46.64,122.00 29.32,132.00 12.00,122.00"/><polygon class="x" points="46.64,122.00 29.32,132.00 29.32,112.00 46.64,102.00"/><polygon class="y" points="12.00,122.00 29.32,132.00 29.32,112.00 12.00,102.00"/><polygon class="z" points="29.32,92.00 46.64,102.00 29.32,112.00 12.00,102.00"/><polygon class="x" points="46.64,102.00 29.32,112.00 29.32,92.00 46.64,82.00"/><polygon class="y" points="12.00,102.00 29.32,112.00 29.32,92.00 12.00,82.00"/><polygon class="z" points="29.32,72.00 46.64,82.00 29.32,92.00 12.00,82.00"/><polygon class="x" points="46.64,82.00 29.32,92.00 29.32,72.00 46.64,62.00"/><polygon class="y" points="12.00,82.00 29.32,92.00 29.32,72.00 12.00,62.00"/><polygon class="z" points="29.32,52.00 46.64,62.00 29.32,72.00 12.00,62.00"/><polygon class="x" points="46.64,62.00 29.32,72.00 29.32,52.00 46.64,42.00"/><polygon class="y" points="12.00,62.00 29.32,72.00 29.32,52.00 12.00,42.00"/><polygon class="z" points="29.32,32.00 46.64,42.00 29.32,52.00 12.00,42.00"/><polygon class="x" points="46.64,42.00 29.32,52.00 29.32,32.00 46.64,22.00"/><polygon class="y" points="12.00,42.00 29.32,52.00 29.32,32.00 12.00,22.00"/><polygon class="z" points="29.32,12.00 46.64,22.00 29.32,32.00 12.00,22.00"/><polygon class="y" points="12.00,42.00 29.32,52.00 29.32,32.00 12.00,22.00"/><polygon class="z" points="29.32,12.00 46.64,22.00 29.32,32.00 12.00,22.00"/>
     </g>
   </svg>
   <h1>Dominic de Bettencourt</h1>

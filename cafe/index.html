@@ -79,6 +79,8 @@
     content: ""; position: absolute; inset: 0 0 -28px 0; z-index: -1;
     background: linear-gradient(to bottom, rgba(233, 233, 226, .92), rgba(233, 233, 226, 0));
   }
+  .brand { transition: opacity .4s; }
+  .on-title .brand { opacity: 0; pointer-events: none; }
   .brand { font-family: var(--display); font-style: italic; font-size: 20px; pointer-events: auto; color: var(--ink); }
   .count { font-family: var(--sc); font-size: 15px; letter-spacing: .08em; color: var(--ink); }
   .menu-btn {
@@ -387,6 +389,7 @@
     });
     var moved = i !== current;
     current = i;
+    document.body.classList.toggle('on-title', i === 0);
     if (moved && onGoHook) onGoHook(i);
     if (typeof updateCount === 'function') updateCount(i);
   }
