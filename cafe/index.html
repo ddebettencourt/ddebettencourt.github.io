@@ -352,6 +352,36 @@
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Anonymous visit counts: a random id per browser, no names, IPs or cookies.
+     Open the page once with #me on the end to stop counting your own visits on that device. ---------- */
+  var track = (function () {
+    var URL_ = 'https://notes-site-three-gamma.vercel.app/api/cafe';
+    var off = false, vid;
+    function rid() { return Math.random().toString(36).slice(2, 12) || 'x0000'; }
+    try {
+      if (location.hash === '#me') localStorage.setItem('cafe_notrack', '1');
+      off = localStorage.getItem('cafe_notrack') === '1';
+      vid = localStorage.getItem('cafe_vid');
+      if (!vid) { vid = rid(); localStorage.setItem('cafe_vid', vid); }
+    } catch (e) { vid = rid(); }
+    var sid = rid(), t0 = Date.now(), far = 0, left = false;
+    function send(e, d, beacon) {
+      if (off) return;
+      var body = JSON.stringify({ v: vid, s: sid, e: e, d: d == null ? null : d });
+      try {
+        if (beacon && navigator.sendBeacon) navigator.sendBeacon(URL_, new Blob([body], { type: 'text/plain' }));
+        else fetch(URL_, { method: 'POST', body: body, keepalive: true, mode: 'cors', headers: { 'Content-Type': 'text/plain' } }).catch(function () {});
+      } catch (e2) {}
+    }
+    var ref = '';
+    try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+    send('open', { w: window.innerWidth, ref: ref });
+    function leave() { if (left) return; left = true; send('leave', { ms: Date.now() - t0, far: far }, true); }
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') leave(); else left = false; });
+    window.addEventListener('pagehide', leave);
+    return { land: function (i) { far = Math.max(far, i); send('land', i); }, send: send };
+  })();
   // No pinch or double-tap zoom: the page is a fixed stage.
   ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) {
     document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false });
@@ -381,6 +411,7 @@
     current = i;
     document.body.classList.toggle('on-title', i === 0);
     if (moved && onGoHook) onGoHook(i);
+    if (moved) track.land(i);
     if (typeof updateCount === 'function') updateCount(i);
   }
   // Swipe, wheel and keys each move one landing. Nothing snaps back.
@@ -410,11 +441,14 @@
     if (['ArrowDown', 'PageDown', ' '].indexOf(e.key) >= 0) { e.preventDefault(); go(current + 1); }
     if (['ArrowUp', 'PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); go(current - 1); }
   });
-  document.getElementById('open-menu').addEventListener('click', function () { sheet.hidden = false; document.getElementById('close-menu').focus(); });
+  document.getElementById('open-menu').addEventListener('click', function () { track.send('menu'); sheet.hidden = false; document.getElementById('close-menu').focus(); });
   document.getElementById('close-menu').addEventListener('click', function () { sheet.hidden = true; });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') sheet.hidden = true; });
   document.querySelectorAll('[data-go]').forEach(function (b) {
-    b.addEventListener('click', function () { go(+b.dataset.go); });
+    b.addEventListener('click', function () {
+      if (b.closest('.sheet')) track.send('jump', +b.dataset.go); else track.send('top');
+      go(+b.dataset.go);
+    });
   });
 
   /* ---------- Toppings: the glasses cycle through them on their own ---------- */
